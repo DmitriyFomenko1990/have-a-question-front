@@ -2,6 +2,12 @@
   "app": {
     "name": "Have A Question"
   },
+  "layout": {
+    "header": {
+      "logout": "Log out",
+      "userAvatar": "{username} user avatar"
+    }
+  },
   "auth": {
     "form": {
       "eyebrow": "Account",

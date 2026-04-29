@@ -53,6 +53,7 @@ const classes = computed(() =>
 
 <template>
   <Primitive
+    v-bind="attrs"
     :as="props.as"
     :as-child="props.asChild"
     :class="classes"

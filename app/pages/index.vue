@@ -1,3 +1,9 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: 'protected',
+})
+</script>
+
 <template>
-  <main class="min-h-screen bg-background" />
+  <section class="mx-auto w-full max-w-6xl px-6 py-10" />
 </template>

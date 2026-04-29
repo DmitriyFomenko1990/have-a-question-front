@@ -2,6 +2,12 @@
   "app": {
     "name": "Have A Question"
   },
+  "layout": {
+    "header": {
+      "logout": "Выйти",
+      "userAvatar": "Аватар пользователя {username}"
+    }
+  },
   "auth": {
     "form": {
       "eyebrow": "Аккаунт",

@@ -119,7 +119,7 @@ export const useAuthStore = defineStore('auth', {
         this.status = 'authenticated'
 
         return session.user
-      } catch (error) {
+      } catch {
         this.user = null
         this.status = 'anonymous'
 
