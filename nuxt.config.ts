@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     },
   ],
   runtimeConfig: {
-    apiBaseUrl: 'http://localhost:8000',
+    apiBaseUrl: 'http://127.0.0.1:8000/',
   },
   colorMode: {
     classSuffix: '',

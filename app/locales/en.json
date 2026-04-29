@@ -1,5 +1,35 @@
 {
   "app": {
     "name": "Have A Question"
+  },
+  "auth": {
+    "form": {
+      "eyebrow": "Account",
+      "title": "Sign in or create a profile",
+      "description": "Authentication lets you create questions, vote, and access your dashboard.",
+      "loginTab": "Sign in",
+      "registerTab": "Register",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "Enter your username",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "passwordConfirmLabel": "Confirm password",
+      "passwordConfirmPlaceholder": "Repeat your password",
+      "loginSubmit": "Sign in",
+      "registerSubmit": "Create account",
+      "pendingSubmit": "Submitting..."
+    },
+    "validation": {
+      "usernameRequired": "Enter your username",
+      "usernameMax": "Username must be no longer than 50 characters",
+      "emailRequired": "Enter your email",
+      "emailInvalid": "Enter a valid email",
+      "passwordRequired": "Enter your password",
+      "passwordMin": "Password must be at least 8 characters",
+      "passwordConfirmRequired": "Repeat your password",
+      "passwordMismatch": "Passwords do not match"
+    }
   }
 }

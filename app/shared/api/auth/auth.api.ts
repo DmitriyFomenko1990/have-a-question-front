@@ -9,27 +9,49 @@ export type AuthLogoutResponse = {
 }
 
 export const authApi = {
-  register: (payload: ApiRegisterPayload) =>
-    $fetch<ApiRegisterResponse>('/api/auth/register', {
+  register: (payload: ApiRegisterPayload) => {
+    const requestFetch = useRequestFetch()
+
+    return requestFetch<ApiRegisterResponse>('/api/auth/register', {
       method: 'POST',
       body: payload,
-    }),
+    })
+  },
 
-  login: (payload: ApiLoginPayload) =>
-    $fetch<AuthSessionResponse>('/api/auth/login', {
+  login: (payload: ApiLoginPayload) => {
+    const requestFetch = useRequestFetch()
+
+    return requestFetch<AuthSessionResponse>('/api/auth/login', {
       method: 'POST',
       body: payload,
-    }),
+    })
+  },
 
-  me: () => $fetch<AuthSessionResponse>('/api/auth/me'),
+  me: () => {
+    const requestFetch = useRequestFetch()
 
-  refresh: () =>
-    $fetch<AuthSessionResponse>('/api/auth/refresh', {
+    return requestFetch<AuthSessionResponse>('/api/auth/me')
+  },
+
+  session: () => {
+    const requestFetch = useRequestFetch()
+
+    return requestFetch<AuthSessionResponse>('/api/auth/session')
+  },
+
+  refresh: () => {
+    const requestFetch = useRequestFetch()
+
+    return requestFetch<AuthSessionResponse>('/api/auth/refresh', {
       method: 'POST',
-    }),
+    })
+  },
 
-  logout: () =>
-    $fetch<AuthLogoutResponse>('/api/auth/logout', {
+  logout: () => {
+    const requestFetch = useRequestFetch()
+
+    return requestFetch<AuthLogoutResponse>('/api/auth/logout', {
       method: 'POST',
-    }),
+    })
+  },
 }

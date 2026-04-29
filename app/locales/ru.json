@@ -1,6 +1,35 @@
 {
   "app": {
     "name": "Have A Question"
+  },
+  "auth": {
+    "form": {
+      "eyebrow": "Аккаунт",
+      "title": "Войдите или создайте профиль",
+      "description": "Авторизация нужна, чтобы создавать вопросы, голосовать и видеть личный кабинет.",
+      "loginTab": "Войти",
+      "registerTab": "Регистрация",
+      "usernameLabel": "Имя пользователя",
+      "usernamePlaceholder": "Введите имя пользователя",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Введите email",
+      "passwordLabel": "Пароль",
+      "passwordPlaceholder": "Введите пароль",
+      "passwordConfirmLabel": "Подтверждение пароля",
+      "passwordConfirmPlaceholder": "Повторите пароль",
+      "loginSubmit": "Войти",
+      "registerSubmit": "Создать аккаунт",
+      "pendingSubmit": "Отправляем..."
+    },
+    "validation": {
+      "usernameRequired": "Введите имя пользователя",
+      "usernameMax": "Имя пользователя не должно быть длиннее 50 символов",
+      "emailRequired": "Введите email",
+      "emailInvalid": "Введите корректный email",
+      "passwordRequired": "Введите пароль",
+      "passwordMin": "Пароль должен быть не короче 8 символов",
+      "passwordConfirmRequired": "Повторите пароль",
+      "passwordMismatch": "Пароли не совпадают"
+    }
   }
-
 }

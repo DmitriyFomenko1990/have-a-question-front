@@ -56,6 +56,15 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
+    async registerAndLogin(payload: ApiRegisterPayload) {
+      await this.register(payload)
+
+      return this.login({
+        email: payload.email,
+        password: payload.password,
+      })
+    },
+
     async login(payload: ApiLoginPayload) {
       this.status = 'pending'
       this.error = null
@@ -94,6 +103,30 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
+    async restoreSession() {
+      if (this.user) {
+        this.status = 'authenticated'
+
+        return this.user
+      }
+
+      this.status = 'pending'
+      this.error = null
+
+      try {
+        const session = await authApi.session()
+        this.user = session.user
+        this.status = 'authenticated'
+
+        return session.user
+      } catch (error) {
+        this.user = null
+        this.status = 'anonymous'
+
+        return null
+      }
+    },
+
     async refreshSession() {
       this.status = 'pending'
       this.error = null
@@ -123,6 +156,10 @@ export const useAuthStore = defineStore('auth', {
         this.user = null
         this.status = 'anonymous'
       }
+    },
+
+    clearError() {
+      this.error = null
     },
   },
 })
