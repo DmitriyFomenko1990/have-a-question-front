@@ -8,6 +8,7 @@ type QuestionSort = 'newest' | 'oldest' | 'activity'
 type DashboardTab = 'questions' | 'polls'
 
 const { t } = useI18n()
+const localePath = useLocalePath()
 
 const activeTab = ref<DashboardTab>('questions')
 const questionQuery = ref('')
@@ -130,10 +131,12 @@ const filteredQuestions = computed(() => {
       </div>
 
       <BaseButton
+        as-child
         class="w-full sm:w-auto"
-        type="button"
       >
-        {{ $t('dashboard.actions.create') }}
+        <NuxtLink :to="localePath('/questions/new')">
+          {{ $t('dashboard.actions.create') }}
+        </NuxtLink>
       </BaseButton>
     </div>
 
@@ -272,10 +275,12 @@ const filteredQuestions = computed(() => {
               </p>
             </div>
             <BaseButton
+              as-child
               class="w-full sm:w-auto"
-              type="button"
             >
-              {{ $t('dashboard.actions.create') }}
+              <NuxtLink :to="localePath('/questions/new')">
+                {{ $t('dashboard.actions.create') }}
+              </NuxtLink>
             </BaseButton>
           </div>
 

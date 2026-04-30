@@ -93,6 +93,43 @@
       }
     }
   },
+  "questions": {
+    "create": {
+      "back": "Back",
+      "eyebrow": "New question",
+      "title": "Create a question",
+      "description": "Fill in the core details, choose the answer type, and add options for voting.",
+      "form": {
+        "titleLabel": "Title",
+        "titlePlaceholder": "For example: which feature should be added first?",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "Add context, details, or a hint for participants",
+        "choiceTypeLabel": "Choice type",
+        "choiceTypeSingle": "Single choice",
+        "choiceTypeMultiple": "Multiple choice",
+        "optionsTitle": "Answer options",
+        "optionsDescription": "Add at least two options so users can choose an answer.",
+        "optionPlaceholder": "Option {number}",
+        "addOption": "Add option",
+        "removeOption": "Remove",
+        "allowCustomAnswerLabel": "Allow custom answer",
+        "allowCustomAnswerDescription": "Users can write their own option if the list does not include a suitable answer.",
+        "submit": "Create question",
+        "pendingSubmit": "Creating..."
+      },
+      "validation": {
+        "titleRequired": "Enter a question title",
+        "titleMax": "Title must be no longer than 255 characters",
+        "choiceTypeRequired": "Choose an answer type",
+        "optionRequired": "Enter an answer option",
+        "optionMax": "Option must be no longer than 255 characters",
+        "optionsMin": "Add at least two answer options"
+      },
+      "errors": {
+        "submit": "Could not create the question. Try again"
+      }
+    }
+  },
   "auth": {
     "form": {
       "eyebrow": "Account",

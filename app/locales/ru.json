@@ -93,6 +93,43 @@
       }
     }
   },
+  "questions": {
+    "create": {
+      "back": "Назад",
+      "eyebrow": "Новый вопрос",
+      "title": "Создайте вопрос",
+      "description": "Заполните основные данные, выберите тип ответа и добавьте варианты для голосования.",
+      "form": {
+        "titleLabel": "Заголовок",
+        "titlePlaceholder": "Например: какую функцию добавить первой?",
+        "descriptionLabel": "Описание",
+        "descriptionPlaceholder": "Добавьте контекст, детали или подсказку для участников",
+        "choiceTypeLabel": "Тип выбора",
+        "choiceTypeSingle": "Один вариант",
+        "choiceTypeMultiple": "Несколько вариантов",
+        "optionsTitle": "Варианты ответа",
+        "optionsDescription": "Добавьте минимум два варианта, чтобы пользователи могли выбрать ответ.",
+        "optionPlaceholder": "Вариант {number}",
+        "addOption": "Добавить вариант",
+        "removeOption": "Удалить",
+        "allowCustomAnswerLabel": "Разрешить свой ответ",
+        "allowCustomAnswerDescription": "Пользователи смогут написать собственный вариант, если подходящего ответа нет в списке.",
+        "submit": "Создать вопрос",
+        "pendingSubmit": "Создаём..."
+      },
+      "validation": {
+        "titleRequired": "Введите заголовок вопроса",
+        "titleMax": "Заголовок не должен быть длиннее 255 символов",
+        "choiceTypeRequired": "Выберите тип ответа",
+        "optionRequired": "Введите вариант ответа",
+        "optionMax": "Вариант не должен быть длиннее 255 символов",
+        "optionsMin": "Добавьте минимум два варианта ответа"
+      },
+      "errors": {
+        "submit": "Не удалось создать вопрос. Попробуйте снова"
+      }
+    }
+  },
   "auth": {
     "form": {
       "eyebrow": "Аккаунт",
