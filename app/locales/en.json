@@ -8,6 +8,91 @@
       "userAvatar": "{username} user avatar"
     }
   },
+  "dashboard": {
+    "actions": {
+      "create": "Create"
+    },
+    "hero": {
+      "eyebrow": "Dashboard",
+      "title": "Your questions and polls workspace",
+      "description": "Keep personal details in view, manage your own questions, and create new polls for your audience."
+    },
+    "profile": {
+      "initials": "AK",
+      "label": "Personal details",
+      "name": "Alexey Kovalev",
+      "email": "alexeyexample.com",
+      "aboutTitle": "Author profile",
+      "aboutDescription": "This area will show a short user summary, activity, and personal dashboard settings.",
+      "stats": {
+        "questions": "questions",
+        "polls": "polls",
+        "active": "active"
+      }
+    },
+    "tabs": {
+      "questions": "Questions",
+      "polls": "Polls"
+    },
+    "questions": {
+      "filters": {
+        "searchPlaceholder": "Find your question",
+        "status": {
+          "all": "All",
+          "active": "Active",
+          "closed": "Closed"
+        },
+        "sort": {
+          "newest": "Newest first",
+          "oldest": "Oldest first",
+          "activity": "By activity"
+        }
+      },
+      "status": {
+        "active": "Active",
+        "closed": "Closed"
+      },
+      "meta": {
+        "answers": "{count} answers",
+        "activity": "{count} actions"
+      },
+      "items": {
+        "product": {
+          "title": "Which features should be added first?",
+          "description": "Collecting product ideas and checking what matters most to users."
+        },
+        "design": {
+          "title": "How can the question creation screen improve?",
+          "description": "Looking for suggestions on form structure, hints, and validation states."
+        },
+        "research": {
+          "title": "Which topics create the most discussion?",
+          "description": "Reviewing past answers to tune future polls more accurately."
+        }
+      }
+    },
+    "polls": {
+      "title": "My polls",
+      "description": "Create polls, track participants, and return to drafts when needed.",
+      "status": {
+        "active": "Active",
+        "draft": "Draft"
+      },
+      "meta": {
+        "participants": "{count} participants"
+      },
+      "items": {
+        "feature": {
+          "title": "New feature priorities",
+          "description": "This poll helps decide which features make it into the next release."
+        },
+        "navigation": {
+          "title": "Navigation clarity",
+          "description": "A draft study about how easily users find the sections they need."
+        }
+      }
+    }
+  },
   "auth": {
     "form": {
       "eyebrow": "Account",

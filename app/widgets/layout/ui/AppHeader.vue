@@ -24,7 +24,9 @@ const logout = async () => {
       </NuxtLink>
 
       <div class="flex items-center gap-4">
-        <UserBadge :username="username" />
+        <NuxtLink to="/profile">
+          <UserBadge :username="username" />
+        </NuxtLink>
 
         <BaseButton
           size="md"
