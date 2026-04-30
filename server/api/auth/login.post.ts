@@ -9,7 +9,9 @@ export default defineEventHandler(async (event): Promise<{ user: ApiUser }> => {
 
   setAuthTokens(event, tokens)
 
-  const user: ApiUser = await requestCurrentUser(event)
+  const user: ApiUser = await requestApi<ApiUser>('/api/auth/me/', {
+    accessToken: tokens.access,
+  })
 
   return {
     user,
