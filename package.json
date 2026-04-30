@@ -12,6 +12,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "test": "vitest",
+    "test:e2e": "playwright test",
     "test:unit": "vitest run",
     "typecheck": "nuxt typecheck"
   },

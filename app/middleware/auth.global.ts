@@ -1,9 +1,10 @@
 import { useAuthStore } from '@/entities/session/model/auth.store'
 
-const authPath = '/auth'
-
 export default defineNuxtRouteMiddleware(async (to) => {
   const authStore = useAuthStore()
+  const localePath = useLocalePath()
+  const authPath = localePath('/auth')
+  const homePath = localePath('/')
   const isAuthRoute = to.path === authPath
 
   if (!authStore.user) {
@@ -15,6 +16,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   if (authStore.isAuthenticated && isAuthRoute) {
-    return navigateTo('/')
+    return navigateTo(homePath)
   }
 })

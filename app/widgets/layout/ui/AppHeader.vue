@@ -3,12 +3,13 @@ import { useAuthStore } from '@/entities/session/model/auth.store'
 import UserBadge from '@/widgets/layout/ui/UserBadge.vue'
 
 const authStore = useAuthStore()
+const localePath = useLocalePath()
 
 const username = computed(() => authStore.user?.username || '')
 
 const logout = async () => {
   await authStore.logout()
-  await navigateTo('/auth')
+  await navigateTo(localePath('/auth'))
 }
 </script>
 
@@ -17,7 +18,7 @@ const logout = async () => {
     <div class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
       <NuxtLink
         class="text-base font-semibold tracking-tight text-foreground"
-        to="/"
+        :to="localePath('/')"
       >
         {{ $t('app.name') }}
       </NuxtLink>

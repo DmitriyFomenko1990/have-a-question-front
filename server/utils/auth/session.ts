@@ -1,29 +1,43 @@
 import type { H3Event } from 'h3'
 import type { ApiTokenRefresh, ApiTokenRefreshPayload, ApiUser } from '@/shared/api/types'
 
-const createUnauthorizedError = () =>
+export const createUnauthorizedError = () =>
   createError({
     statusCode: 401,
     statusMessage: 'Unauthorized',
   })
 
+const isUnauthorizedError = (error: unknown) => getApiErrorStatus(error) === 401
+
 export const refreshAuthSession = async (event: H3Event): Promise<string> => {
   const refresh = getAuthRefreshToken(event)
 
   if (!refresh) {
+    clearAuthTokens(event)
+
     throw createUnauthorizedError()
   }
 
-  const token = await requestApi<ApiTokenRefresh, ApiTokenRefreshPayload>('/api/auth/token/refresh/', {
-    method: 'POST',
-    body: { refresh },
-  })
+  try {
+    const token = await requestApi<ApiTokenRefresh, ApiTokenRefreshPayload>('/api/auth/token/refresh/', {
+      method: 'POST',
+      body: { refresh },
+    })
 
-  setAuthTokens(event, {
-    access: token.access,
-  })
+    setAuthTokens(event, {
+      access: token.access,
+    })
 
-  return token.access
+    return token.access
+  } catch (error) {
+    if (isUnauthorizedError(error)) {
+      clearAuthTokens(event)
+
+      throw createUnauthorizedError()
+    }
+
+    throw error
+  }
 }
 
 export const requestCurrentUser = async (event: H3Event): Promise<ApiUser> => {
@@ -42,7 +56,7 @@ export const restoreAuthSession = async (event: H3Event): Promise<ApiUser> => {
   try {
     return await requestCurrentUser(event)
   } catch (error) {
-    if (getApiErrorStatus(error) !== 401) {
+    if (!isUnauthorizedError(error)) {
       throw error
     }
   }
@@ -56,7 +70,7 @@ export const restoreAuthSession = async (event: H3Event): Promise<ApiUser> => {
   } catch (error) {
     clearAuthTokens(event)
 
-    if (getApiErrorStatus(error) === 401) {
+    if (isUnauthorizedError(error)) {
       throw createUnauthorizedError()
     }
 

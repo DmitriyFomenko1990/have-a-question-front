@@ -36,6 +36,15 @@
       "passwordMin": "Password must be at least 8 characters",
       "passwordConfirmRequired": "Repeat your password",
       "passwordMismatch": "Passwords do not match"
+    },
+    "errors": {
+      "invalidCredentials": "Invalid email or password",
+      "sessionExpired": "Your session has expired. Sign in again",
+      "unauthorized": "You do not have access to this action",
+      "validation": "Check the form data and try again",
+      "network": "Could not connect to the server. Try again later",
+      "server": "The server is temporarily unavailable. Try again later",
+      "generic": "Could not complete the action. Try again"
     }
   }
 }

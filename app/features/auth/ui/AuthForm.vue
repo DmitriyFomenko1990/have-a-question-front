@@ -7,6 +7,7 @@ type AuthMode = 'login' | 'register'
 
 const authStore = useAuthStore()
 const { t } = useI18n()
+const localePath = useLocalePath()
 const mode = ref<AuthMode>('login')
 
 const modeOptions = computed(() => [
@@ -25,7 +26,7 @@ watch(mode, () => {
 })
 
 const handleSuccess = async () => {
-  await navigateTo('/')
+  await navigateTo(localePath('/'))
 }
 </script>
 

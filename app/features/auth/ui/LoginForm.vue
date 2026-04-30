@@ -11,6 +11,7 @@ const emit = defineEmits<{
 
 const authStore = useAuthStore()
 const { t } = useI18n()
+const authErrorMessage = computed(() => authStore.errorMessageKey ? t(authStore.errorMessageKey) : null)
 
 const { defineField, errors, handleSubmit } = useForm<LoginFormValues>({
   validationSchema: toTypedSchema(createLoginSchema(t)),
@@ -66,8 +67,8 @@ const onSubmit = handleSubmit(async (values) => {
       />
     </BaseField>
 
-    <BaseFormError v-if="authStore.error">
-      {{ authStore.error }}
+    <BaseFormError v-if="authErrorMessage">
+      {{ authErrorMessage }}
     </BaseFormError>
 
     <BaseButton

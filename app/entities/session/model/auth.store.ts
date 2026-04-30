@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { normalizeAuthError, type AuthError, type AuthErrorContext } from '@/entities/session/model/auth.errors'
 import { authApi } from '@/shared/api/auth/auth.api'
 import type { ApiLoginPayload, ApiRegisterPayload, ApiRegisterResponse, ApiUser } from '@/shared/api/types'
 
@@ -7,24 +8,11 @@ type AuthStatus = 'idle' | 'pending' | 'authenticated' | 'anonymous'
 type AuthState = {
   user: ApiUser | null
   status: AuthStatus
-  error: string | null
+  error: AuthError | null
 }
 
-const getAuthErrorMessage = (error: unknown) => {
-  if (!error || typeof error !== 'object') {
-    return 'Auth request failed'
-  }
-
-  if ('statusMessage' in error && typeof error.statusMessage === 'string') {
-    return error.statusMessage
-  }
-
-  if ('message' in error && typeof error.message === 'string') {
-    return error.message
-  }
-
-  return 'Auth request failed'
-}
+const restoreSessionRequests = new WeakMap<object, Promise<ApiUser | null>>()
+const refreshSessionRequests = new WeakMap<object, Promise<ApiUser>>()
 
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
@@ -36,21 +24,46 @@ export const useAuthStore = defineStore('auth', {
   getters: {
     isAuthenticated: (state) => Boolean(state.user),
     isPending: (state) => state.status === 'pending',
+    errorMessageKey: (state) => state.error?.messageKey ?? null,
   },
 
   actions: {
-    async register(payload: ApiRegisterPayload): Promise<ApiRegisterResponse> {
+    startRequest() {
       this.status = 'pending'
       this.error = null
+    },
+
+    setAuthenticated(user: ApiUser) {
+      this.user = user
+      this.status = 'authenticated'
+      this.error = null
+    },
+
+    setAnonymous(error: AuthError | null = null) {
+      this.user = null
+      this.status = 'anonymous'
+      this.error = error
+    },
+
+    settleWithoutSessionChange(error: AuthError | null = null) {
+      this.status = this.user ? 'authenticated' : 'anonymous'
+      this.error = error
+    },
+
+    setAuthError(error: unknown, context: AuthErrorContext) {
+      this.error = normalizeAuthError(error, context)
+    },
+
+    async register(payload: ApiRegisterPayload): Promise<ApiRegisterResponse> {
+      this.startRequest()
 
       try {
         const registeredUser = await authApi.register(payload)
-        this.status = this.user ? 'authenticated' : 'anonymous'
+        this.settleWithoutSessionChange()
 
         return registeredUser
       } catch (error) {
-        this.status = this.user ? 'authenticated' : 'anonymous'
-        this.error = getAuthErrorMessage(error)
+        this.settleWithoutSessionChange(normalizeAuthError(error, 'register'))
 
         throw error
       }
@@ -66,95 +79,116 @@ export const useAuthStore = defineStore('auth', {
     },
 
     async login(payload: ApiLoginPayload) {
-      this.status = 'pending'
-      this.error = null
+      this.startRequest()
 
       try {
         const session = await authApi.login(payload)
-        this.user = session.user
-        this.status = 'authenticated'
+        this.setAuthenticated(session.user)
 
         return session.user
       } catch (error) {
-        this.user = null
-        this.status = 'anonymous'
-        this.error = getAuthErrorMessage(error)
+        this.setAnonymous(normalizeAuthError(error, 'login'))
 
         throw error
       }
     },
 
     async loadMe() {
-      this.status = 'pending'
-      this.error = null
+      this.startRequest()
 
       try {
         const session = await authApi.me()
-        this.user = session.user
-        this.status = 'authenticated'
+        this.setAuthenticated(session.user)
 
         return session.user
       } catch (error) {
-        this.user = null
-        this.status = 'anonymous'
-        this.error = getAuthErrorMessage(error)
+        this.setAnonymous(normalizeAuthError(error, 'session'))
 
         return null
       }
     },
 
     async restoreSession() {
+      const pendingRequest = restoreSessionRequests.get(this)
+
+      if (pendingRequest) {
+        return pendingRequest
+      }
+
+      const request = this.runRestoreSession()
+      restoreSessionRequests.set(this, request)
+
+      try {
+        return await request
+      } finally {
+        if (restoreSessionRequests.get(this) === request) {
+          restoreSessionRequests.delete(this)
+        }
+      }
+    },
+
+    async runRestoreSession() {
       if (this.user) {
-        this.status = 'authenticated'
+        this.setAuthenticated(this.user)
 
         return this.user
       }
 
-      this.status = 'pending'
-      this.error = null
+      this.startRequest()
 
       try {
         const session = await authApi.session()
-        this.user = session.user
-        this.status = 'authenticated'
+        this.setAuthenticated(session.user)
 
         return session.user
       } catch {
-        this.user = null
-        this.status = 'anonymous'
+        this.setAnonymous()
 
         return null
       }
     },
 
     async refreshSession() {
-      this.status = 'pending'
-      this.error = null
+      const pendingRequest = refreshSessionRequests.get(this)
+
+      if (pendingRequest) {
+        return pendingRequest
+      }
+
+      const request = this.runRefreshSession()
+      refreshSessionRequests.set(this, request)
+
+      try {
+        return await request
+      } finally {
+        if (refreshSessionRequests.get(this) === request) {
+          refreshSessionRequests.delete(this)
+        }
+      }
+    },
+
+    async runRefreshSession() {
+      this.startRequest()
 
       try {
         const session = await authApi.refresh()
-        this.user = session.user
-        this.status = 'authenticated'
+        this.setAuthenticated(session.user)
 
         return session.user
       } catch (error) {
-        this.user = null
-        this.status = 'anonymous'
-        this.error = getAuthErrorMessage(error)
+        this.setAnonymous(normalizeAuthError(error, 'refresh'))
 
         throw error
       }
     },
 
     async logout() {
-      this.status = 'pending'
-      this.error = null
+      this.startRequest()
 
       try {
         await authApi.logout()
       } finally {
-        this.user = null
-        this.status = 'anonymous'
+        this.setAnonymous()
       }
     },
 
