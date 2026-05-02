@@ -6,6 +6,7 @@ import type { ApiQuestionListItem, ApiQuestionRespondPayload } from '@/shared/ap
 
 const props = defineProps<{
   question: ApiQuestionListItem
+  myQuestion?: boolean
 }>()
 
 const { t } = useI18n()
@@ -18,6 +19,7 @@ const isSubmitted = ref(false)
 const isSubmitting = ref(false)
 
 const hasAnswered = computed(() => answeredState.hasAnswered || isSubmitted.value)
+const isDisabled = computed(() => props.myQuestion || hasAnswered.value)
 const hasCustomAnswerText = computed(() => customAnswerText.value.trim().length > 0)
 
 const clearMessages = () => {
@@ -66,7 +68,7 @@ const onSubmit = async () => {
     <QuestionOptionsSelect
       v-model="selectedOptionIds"
       :choice-type="question.choice_type"
-      :disabled="hasAnswered"
+      :disabled="isDisabled"
       :name="`question-${question.id}`"
       :options="question.options"
     />
@@ -78,7 +80,7 @@ const onSubmit = async () => {
     >
       <BaseInput
         v-model="customAnswerText"
-        :disabled="hasAnswered"
+        :disabled="isDisabled"
         :placeholder="$t('questions.card.customAnswerPlaceholder')"
       />
     </BaseField>
@@ -109,7 +111,7 @@ const onSubmit = async () => {
     </p>
 
     <BaseButton
-      v-if="!hasAnswered"
+      v-if="!isDisabled"
       class="mt-4 w-full sm:w-auto"
       :disabled="isSubmitting"
       type="submit"

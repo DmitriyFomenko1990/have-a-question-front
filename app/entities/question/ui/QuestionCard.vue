@@ -4,6 +4,7 @@ import type { ApiQuestionListItem } from '@/shared/api/types'
 
 const props = defineProps<{
   question: ApiQuestionListItem
+  myQuestion?: boolean
 }>()
 
 const { locale } = useI18n()
@@ -37,6 +38,9 @@ const createdAt = computed(() =>
       </p>
     </div>
 
-    <QuestionAnswerForm :question="question" />
+    <QuestionAnswerForm
+      :my-question="myQuestion"
+      :question="question"
+    />
   </article>
 </template>

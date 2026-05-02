@@ -23,6 +23,19 @@
       "emptyAction": "Create question"
     }
   },
+  "profile": {
+    "questions": {
+      "title": "My questions",
+      "description": "Questions you created. In your profile, they are shown without answer actions.",
+      "loading": "Loading your questions...",
+      "errorTitle": "Could not load your questions",
+      "errorDescription": "Try the request again. If the problem persists, come back later.",
+      "retry": "Retry",
+      "emptyTitle": "You have not created questions yet",
+      "emptyDescription": "Create your first question to collect participant answers.",
+      "emptyAction": "Create question"
+    }
+  },
   "dashboard": {
     "actions": {
       "create": "Create"

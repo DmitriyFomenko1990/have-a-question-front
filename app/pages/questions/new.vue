@@ -47,9 +47,6 @@ const handleSuccess = () => navigateTo(localePath('/profile'))
     </button>
 
     <div class="mt-8">
-      <p class="text-sm font-semibold text-primary">
-        {{ $t('questions.create.eyebrow') }}
-      </p>
       <h1 class="mt-2 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
         {{ $t('questions.create.title') }}
       </h1>
