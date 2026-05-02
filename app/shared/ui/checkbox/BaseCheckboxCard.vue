@@ -1,28 +1,28 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   value: string
-  name: string
   label: string
   disabled?: boolean
 }>()
 
-const model = defineModel<string>({ required: true })
+const model = defineModel<string[]>({ required: true })
+
+const isChecked = computed(() => model.value.includes(props.value))
 </script>
 
 <template>
   <label
     class="flex items-center gap-3 rounded-2xl border border-border p-4 text-sm font-semibold text-foreground transition"
     :class="[
-      model === value ? 'bg-muted ring-2 ring-primary/20' : 'bg-background',
+      isChecked ? 'bg-muted ring-2 ring-primary/20' : 'bg-background',
       disabled ? 'cursor-not-allowed opacity-70' : 'cursor-pointer hover:bg-muted/60',
     ]"
   >
     <input
       v-model="model"
-      class="size-4 accent-primary"
+      class="size-4 rounded accent-primary"
       :disabled="disabled"
-      :name="name"
-      type="radio"
+      type="checkbox"
       :value="value"
     >
     <span>{{ label }}</span>

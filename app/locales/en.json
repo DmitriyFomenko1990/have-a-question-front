@@ -8,6 +8,21 @@
       "userAvatar": "{username} user avatar"
     }
   },
+  "home": {
+    "questions": {
+      "eyebrow": "Questions",
+      "title": "All community questions",
+      "description": "Browse active questions, answer options, and response counts from participants.",
+      "create": "Create question",
+      "loading": "Loading questions...",
+      "errorTitle": "Could not load questions",
+      "errorDescription": "Try the request again. If the problem persists, come back later.",
+      "retry": "Retry",
+      "emptyTitle": "No questions yet",
+      "emptyDescription": "Create the first question so participants can choose an answer and share their opinion.",
+      "emptyAction": "Create question"
+    }
+  },
   "dashboard": {
     "actions": {
       "create": "Create"
@@ -94,6 +109,22 @@
     }
   },
   "questions": {
+    "card": {
+      "noOptions": "No answer options yet",
+      "customAnswerLabel": "Custom answer",
+      "customAnswerPlaceholder": "Enter your own answer option",
+      "submit": "Save",
+      "pendingSubmit": "Saving...",
+      "success": "Answer saved",
+      "answered": "You have already answered this question",
+      "validation": {
+        "selectOption": "Choose an answer option",
+        "selectOptionOrCustomAnswer": "Choose an answer option or enter your own answer"
+      },
+      "errors": {
+        "submit": "Could not save the answer. Try again"
+      }
+    },
     "create": {
       "back": "Back",
       "eyebrow": "New question",

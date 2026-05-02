@@ -475,6 +475,15 @@ components:
           items:
             $ref: '#/components/schemas/QuestionOption'
           readOnly: true
+        has_answered:
+          type: boolean
+          readOnly: true
+        answered_options:
+          type: string
+          readOnly: true
+        answered_custom_text:
+          type: string
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -484,8 +493,11 @@ components:
           format: date-time
           readOnly: true
       required:
+      - answered_custom_text
+      - answered_options
       - author
       - created_at
+      - has_answered
       - id
       - options
       - options_count

@@ -221,6 +221,9 @@ export interface components {
             readonly options_count: number;
             readonly responses_count: number;
             readonly options: components["schemas"]["QuestionOption"][];
+            readonly has_answered: boolean;
+            readonly answered_options: string;
+            readonly answered_custom_text: string;
             /** Format: date-time */
             readonly created_at: string;
             /** Format: date-time */
