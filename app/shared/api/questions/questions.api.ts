@@ -6,6 +6,8 @@ import type {
   ApiQuestionRespondPayload,
   ApiQuestionRespondResponse,
   ApiQuestionResultsResponse,
+  ApiQuestionSearchPayload,
+  ApiQuestionSearchResponse,
 } from '@/shared/api/types'
 
 export const questionsApi = {
@@ -13,6 +15,15 @@ export const questionsApi = {
     const requestFetch = useRequestFetch()
 
     return requestFetch<ApiQuestionListItem[]>('/api/questions')
+  },
+
+  search: (payload: ApiQuestionSearchPayload) => {
+    const requestFetch = useRequestFetch()
+
+    return requestFetch<ApiQuestionSearchResponse>('/api/questions/search', {
+      method: 'POST',
+      body: payload,
+    })
   },
 
   my: () => {

@@ -156,6 +156,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/questions/search/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Search questions
+         * @description Search, filter, and sort questions available to the current user.
+         */
+        post: operations["questions_search_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/schema/": {
         parameters: {
             query?: never;
@@ -182,6 +202,15 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /**
+         * @description * `all` - all
+         *     * `true` - true
+         *     * `false` - false
+         * @enum {string}
+         */
+        AnsweredEnum: "all" | "true" | "false";
+        /** @enum {unknown} */
+        BlankEnum: "";
         /**
          * @description * `single` - Single choice
          *     * `multiple` - Multiple choice
@@ -237,6 +266,15 @@ export interface components {
             option_ids?: number[];
             custom_answer_text?: string;
         };
+        QuestionSearch: {
+            search?: string;
+            /** @default all */
+            answered: components["schemas"]["AnsweredEnum"];
+            /** @default  */
+            sort: components["schemas"]["SortEnum"] | components["schemas"]["BlankEnum"];
+            /** @default default */
+            sort_type: components["schemas"]["SortTypeEnum"];
+        };
         Register: {
             readonly id: number;
             /** Format: email */
@@ -245,6 +283,19 @@ export interface components {
             password: string;
             password_confirm: string;
         };
+        /**
+         * @description * `created_at` - created_at
+         *     * `responses_count` - responses_count
+         * @enum {string}
+         */
+        SortEnum: "created_at" | "responses_count";
+        /**
+         * @description * `default` - default
+         *     * `asc` - asc
+         *     * `desc` - desc
+         * @enum {string}
+         */
+        SortTypeEnum: "default" | "asc" | "desc";
         TokenObtainPair: {
             email: string;
             password: string;
@@ -491,6 +542,31 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QuestionList"][];
+                };
+            };
+        };
+    };
+    questions_search_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["QuestionSearch"];
+                "application/x-www-form-urlencoded": components["schemas"]["QuestionSearch"];
+                "multipart/form-data": components["schemas"]["QuestionSearch"];
+            };
+        };
         responses: {
             200: {
                 headers: {

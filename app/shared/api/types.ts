@@ -24,3 +24,10 @@ export type ApiQuestionRespondPayload =
 export type ApiQuestionRespondResponse =
   operations['questions_respond_create']['responses'][201]['content']['application/json']
 export type ApiQuestionResultsResponse = unknown
+export type ApiQuestionSearchPayload =
+  NonNullable<operations['questions_search_create']['requestBody']>['content']['application/json']
+export type ApiQuestionSearchResponse =
+  operations['questions_search_create']['responses'][200]['content']['application/json']
+export type ApiQuestionAnsweredFilter = components['schemas']['AnsweredEnum']
+export type ApiQuestionSort = components['schemas']['SortEnum']
+export type ApiQuestionSortType = components['schemas']['SortTypeEnum']

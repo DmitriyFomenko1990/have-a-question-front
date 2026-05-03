@@ -20,7 +20,24 @@
       "retry": "Повторить",
       "emptyTitle": "Вопросов пока нет",
       "emptyDescription": "Создайте первый вопрос, чтобы участники могли выбрать ответ и оставить своё мнение.",
-      "emptyAction": "Создать вопрос"
+      "emptyAction": "Создать вопрос",
+      "filters": {
+        "searchPlaceholder": "Найти вопрос",
+        "answered": {
+          "all": "Все",
+          "answered": "Отвеченные",
+          "unanswered": "Неотвеченные"
+        },
+        "sort": {
+          "createdAt": "По дате",
+          "responsesCount": "По ответам"
+        },
+        "sortType": {
+          "desc": "Сначала новые",
+          "asc": "Сначала старые",
+          "default": "По умолчанию"
+        }
+      }
     }
   },
   "profile": {

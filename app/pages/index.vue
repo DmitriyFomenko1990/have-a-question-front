@@ -1,20 +1,41 @@
 <script setup lang="ts">
 import QuestionCard from '@/entities/question/ui/QuestionCard.vue'
 import { questionsApi } from '@/shared/api/questions/questions.api'
+import type { ApiQuestionAnsweredFilter, ApiQuestionSearchPayload, ApiQuestionSort, ApiQuestionSortType } from '@/shared/api/types'
 
 definePageMeta({
   layout: 'protected',
 })
 
 const localePath = useLocalePath()
+const search = ref('')
+const answered = ref<ApiQuestionAnsweredFilter>('all')
+const sort = ref<ApiQuestionSort>('created_at')
+const sortType = ref<ApiQuestionSortType>('desc')
+
+const searchPayload = computed<ApiQuestionSearchPayload>(() => ({
+  search: search.value.trim(),
+  answered: answered.value,
+  sort: sort.value,
+  sort_type: sortType.value,
+}))
 
 const {
   data: questions,
   error,
   pending,
   refresh,
-} = await useAsyncData('questions:list', () => questionsApi.list(), {
+} = await useAsyncData('questions:search', () => questionsApi.search(searchPayload.value), {
   default: () => [],
+  watch: [answered, sort, sortType],
+})
+
+const refreshDebounced = useDebounceFn(() => {
+  refresh()
+}, 400)
+
+watch(search, () => {
+  refreshDebounced()
 })
 </script>
 
@@ -28,6 +49,58 @@ const {
         <p class="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
           {{ $t('home.questions.description') }}
         </p>
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-3xl border border-border bg-background p-4 shadow-sm sm:p-5">
+      <div class="grid gap-3 lg:grid-cols-[minmax(0,1fr)_180px_180px_180px]">
+        <BaseInput
+          v-model="search"
+          :placeholder="$t('home.questions.filters.searchPlaceholder')"
+          type="search"
+        />
+
+        <select
+          v-model="answered"
+          class="h-11 rounded-2xl border border-border bg-background px-4 text-sm font-medium text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+        >
+          <option value="all">
+            {{ $t('home.questions.filters.answered.all') }}
+          </option>
+          <option value="false">
+            {{ $t('home.questions.filters.answered.unanswered') }}
+          </option>
+          <option value="true">
+            {{ $t('home.questions.filters.answered.answered') }}
+          </option>
+        </select>
+
+        <select
+          v-model="sort"
+          class="h-11 rounded-2xl border border-border bg-background px-4 text-sm font-medium text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+        >
+          <option value="created_at">
+            {{ $t('home.questions.filters.sort.createdAt') }}
+          </option>
+          <option value="responses_count">
+            {{ $t('home.questions.filters.sort.responsesCount') }}
+          </option>
+        </select>
+
+        <select
+          v-model="sortType"
+          class="h-11 rounded-2xl border border-border bg-background px-4 text-sm font-medium text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+        >
+          <option value="desc">
+            {{ $t('home.questions.filters.sortType.desc') }}
+          </option>
+          <option value="asc">
+            {{ $t('home.questions.filters.sortType.asc') }}
+          </option>
+          <option value="default">
+            {{ $t('home.questions.filters.sortType.default') }}
+          </option>
+        </select>
       </div>
     </div>
 

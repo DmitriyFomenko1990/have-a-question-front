@@ -153,7 +153,6 @@ paths:
       - questions
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -214,6 +213,35 @@ paths:
       operationId: questions_my_list
       tags:
       - questions
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuestionList'
+          description: ''
+  /api/questions/search/:
+    post:
+      operationId: questions_search_create
+      description: Search, filter, and sort questions available to the current user.
+      summary: Search questions
+      tags:
+      - questions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionSearch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QuestionSearch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QuestionSearch'
       security:
       - jwtAuth: []
       responses:
@@ -373,6 +401,19 @@ paths:
           description: ''
 components:
   schemas:
+    AnsweredEnum:
+      enum:
+      - all
+      - 'true'
+      - 'false'
+      type: string
+      description: |-
+        * `all` - all
+        * `true` - true
+        * `false` - false
+    BlankEnum:
+      enum:
+      - ''
     ChoiceTypeEnum:
       enum:
       - single
@@ -525,6 +566,24 @@ components:
             type: integer
         custom_answer_text:
           type: string
+    QuestionSearch:
+      type: object
+      properties:
+        search:
+          type: string
+        answered:
+          allOf:
+          - $ref: '#/components/schemas/AnsweredEnum'
+          default: all
+        sort:
+          default: ''
+          oneOf:
+          - $ref: '#/components/schemas/SortEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        sort_type:
+          allOf:
+          - $ref: '#/components/schemas/SortTypeEnum'
+          default: default
     Register:
       type: object
       properties:
@@ -550,6 +609,24 @@ components:
       - password
       - password_confirm
       - username
+    SortEnum:
+      enum:
+      - created_at
+      - responses_count
+      type: string
+      description: |-
+        * `created_at` - created_at
+        * `responses_count` - responses_count
+    SortTypeEnum:
+      enum:
+      - default
+      - asc
+      - desc
+      type: string
+      description: |-
+        * `default` - default
+        * `asc` - asc
+        * `desc` - desc
     TokenObtainPair:
       type: object
       properties:

@@ -20,7 +20,24 @@
       "retry": "Retry",
       "emptyTitle": "No questions yet",
       "emptyDescription": "Create the first question so participants can choose an answer and share their opinion.",
-      "emptyAction": "Create question"
+      "emptyAction": "Create question",
+      "filters": {
+        "searchPlaceholder": "Find a question",
+        "answered": {
+          "all": "All",
+          "answered": "Answered",
+          "unanswered": "Unanswered"
+        },
+        "sort": {
+          "createdAt": "By date",
+          "responsesCount": "By answers"
+        },
+        "sortType": {
+          "desc": "Newest first",
+          "asc": "Oldest first",
+          "default": "Default"
+        }
+      }
     }
   },
   "profile": {
